@@ -6,3 +6,5 @@
 .item {
     color: white;
 }
+
+.item a.activeLink{color: gold;}
