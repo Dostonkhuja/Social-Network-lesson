@@ -1,8 +1,9 @@
 import React from "react";
 import s from './nav.module.css'
 import {NavLink} from "react-router-dom";
+import MyFriends from "./MyFriends/MyFriends";
 
-const Nav = () => {
+const Nav = (props) => {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
@@ -23,6 +24,7 @@ const Nav = () => {
             <div className={s.item}>
                 <NavLink to='/settings' activeClassName={s.activeLink}> Settings </NavLink>
             </div>
+            <MyFriends myFriends={props.navPage.myFriends}/>
         </nav>
     )
 }
