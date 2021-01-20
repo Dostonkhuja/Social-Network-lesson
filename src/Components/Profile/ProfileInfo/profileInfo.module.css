@@ -1,5 +1,8 @@
 .contentImg {
-    width: 100%;
+    margin: 0 auto;
+    width: 805px;
+    box-sizing: border-box;
+    border-radius: 10px;
 }
 
 .descriptionBlock {
