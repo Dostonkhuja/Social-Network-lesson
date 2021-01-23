@@ -24,7 +24,7 @@ const Nav = (props) => {
             <div className={s.item}>
                 <NavLink to='/settings' activeClassName={s.activeLink}> Settings </NavLink>
             </div>
-            <MyFriends myFriends={props.navPage.myFriends}/>
+            <MyFriends myFriends={props.store.getState().navPage.myFriends} />
         </nav>
     )
 }
