@@ -18,7 +18,7 @@ let initialState =  {
 
 const navReducer = (state = initialState,action)=>{
 
-    return state;
+    return state
 }
 
 export default navReducer;
