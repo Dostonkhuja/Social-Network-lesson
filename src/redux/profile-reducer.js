@@ -37,3 +37,4 @@ export let updateNewPostTextActionCreator = (text) => {
 }
 
 export default profileReducer;
+
