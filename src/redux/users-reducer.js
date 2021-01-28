@@ -9,10 +9,10 @@ const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 let initialState = {
     users: [],
     pageSize:10,
-    totalUsersCount:19,
+    totalUsersCount:0,
     currentPage:1
 }
-
+//Users.jsx da vaqtinchalik faylni o'chirib bu yerdagi defoltni 0 qilib qo'y
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW:
