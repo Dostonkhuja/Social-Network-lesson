@@ -12,7 +12,7 @@ let initialState = {
     totalUsersCount:0,
     currentPage:1
 }
-//Users.jsx da vaqtinchalik faylni o'chirib bu yerdagi defoltni 0 qilib qo'y
+
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW:
@@ -46,11 +46,11 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-export let followAC = (userId) => {return {type: FOLLOW, userId}}
-export let unfollowAC = (userId) => {return {type: UNFOLLOW, userId}}
-export let setUsersAC= (users) => {return {type:SET_USERS, users}}
-export let setCurrentPageAC= (currentPage) => {return {type:SET_CURRENT_PAGE, currentPage}}
-export let setTotalUsersCountAC= (totalCount) => {return {type:SET_TOTAL_USERS_COUNT,totalCountAll: totalCount}}
+export let follow = (userId) => {return {type: FOLLOW, userId}}
+export let unfollow = (userId) => {return {type: UNFOLLOW, userId}}
+export let setUsers = (users) => {return {type:SET_USERS, users}}
+export let setCurrentPage = (currentPage) => {return {type:SET_CURRENT_PAGE, currentPage}}
+export let setTotalUsersCount = (totalCount) => {return {type:SET_TOTAL_USERS_COUNT,totalCountAll: totalCount}}
 
 export default usersReducer;
 
