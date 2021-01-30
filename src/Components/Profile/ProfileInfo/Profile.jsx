@@ -3,7 +3,7 @@ import s from './profileInfo.module.css'
 import Preloader from "../../common/preloader/Preloader";
 
 const ProfileInfo = (props) => {
-    if (!props.profile) {return <Preloader/>}
+    if (!props.profile) {return <Preloader />}
 
     return (
         <div>
