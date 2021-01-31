@@ -2,32 +2,27 @@ import React from 'react'
 import {connect} from "react-redux";
 import Users from "./Users";
 import {follow, setCurrentPage, setIsFetching, setTotalUsersCount, setUsers, unfollow} from "../../redux/users-reducer";
-import * as axios from "axios";
 import Preloader from "../common/preloader/Preloader";
+import {usersAPI} from "../../api/api";
 
 class UsersСontainer extends React.Component {
     componentDidMount() {
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,{
-            withCredentials : true,
-        })
-            .then(response => {
+        usersAPI.getUsers(this.props.currentPage,this.props.pageSize).then(data => {
                 this.props.setIsFetching(false)
-                this.props.setUsers(response.data.items)
-                response.data.totalCount = 100;     // HOZIRCHA TURIBTI, KEYIN O'CHIRIB TASHLANSIN
-                this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.setUsers(data.items)
+                data.totalCount = 100;     // HOZIRCHA TURIBTI, KEYIN O'CHIRIB TASHLANSIN
+                this.props.setTotalUsersCount(data.totalCount)
             })
     }
 
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber)
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{
-            withCredentials : true,
-        })
-            .then(response => {
+        usersAPI.getUsers(pageNumber,this.props.pageSize)
+            .then(data => {
                 this.props.setIsFetching(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             })
     }
 
@@ -42,6 +37,8 @@ class UsersСontainer extends React.Component {
                 follow={this.props.follow}
                 unfollow={this.props.unfollow}
                 onPageChanged={this.onPageChanged}
+                followPost={usersAPI.followPost}
+                unfollowDelete={usersAPI.unfollowDelete}
             />
         </>
     }
