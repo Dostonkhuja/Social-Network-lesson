@@ -56,5 +56,6 @@ export let setUsers = (users) => {return {type:SET_USERS, users}}
 export let setCurrentPage = (currentPage) => {return {type:SET_CURRENT_PAGE, currentPage}}
 export let setTotalUsersCount = (totalCount) => {return {type:SET_TOTAL_USERS_COUNT,totalCountAll: totalCount}}
 export let setIsFetching = (isFetching) => { return {type:SET_IS_FETCHING,isFetching}}
+
 export default usersReducer;
 

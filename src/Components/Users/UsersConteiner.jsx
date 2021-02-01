@@ -19,8 +19,7 @@ class UsersСontainer extends React.Component {
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber)
         this.props.setIsFetching(true)
-        usersAPI.getUsers(pageNumber,this.props.pageSize)
-            .then(data => {
+        usersAPI.getUsers(pageNumber,this.props.pageSize).then(data => {
                 this.props.setIsFetching(false)
                 this.props.setUsers(data.items)
             })

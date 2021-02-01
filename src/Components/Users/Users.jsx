@@ -33,14 +33,13 @@ const Users = (props) => {
                             {u.followed
                                 ? <button onClick={() => {
                                     props.unfollowDelete(u.id).then(data => {
-                                        if (data.resultCode === 0) {
+                                         if (data.resultCode === 0) {
                                             props.unfollow(u.id)
                                         }
                                     })
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    props.followPost(u.id)
-                                        .then(data => {
+                                    props.followPost(u.id).then(data => {
                                             if (data.resultCode === 0) {
                                                 props.follow(u.id)
                                             }
