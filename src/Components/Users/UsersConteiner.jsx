@@ -47,7 +47,7 @@ let mapStateToProps = (state) => {
 }
 
 export default withAuthRedirect(connect(mapStateToProps,
-    {follow, unfollow, toggleFollowingProgress, getUsers})(withAuthRedirect)
+    {follow, unfollow, toggleFollowingProgress, getUsers})(UsersСontainer)
 );
 
 
