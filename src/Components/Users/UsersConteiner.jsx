@@ -8,6 +8,7 @@ import {
 } from "../../redux/users-reducer";
 import Preloader from "../common/preloader/Preloader";
 import {withAuthRedirect} from "../HOC/withAuthRedirect";
+import {compose} from "redux";
 
 class UsersСontainer extends React.Component {
     componentDidMount() {
@@ -45,10 +46,12 @@ let mapStateToProps = (state) => {
         followingInProgress: state.usersPage.followingInProgress,
     }
 }
+export default compose(
+    connect(mapStateToProps, {follow, unfollow, toggleFollowingProgress, getUsers}),
+    withAuthRedirect
+)(UsersСontainer)
 
-export default withAuthRedirect(connect(mapStateToProps,
-    {follow, unfollow, toggleFollowingProgress, getUsers})(UsersСontainer)
-);
+
 
 
 
