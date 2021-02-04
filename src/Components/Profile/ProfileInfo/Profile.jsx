@@ -15,12 +15,12 @@ const ProfileInfo = (props) => {
             <div className={s.descriptionBlock}>
                 <div>
                     <img src={props.profile.photos.large} />
-                    <h4>{props.profile.fullName}</h4>
-                    <ProfileStatus status={'hello my friends'}/>
+                    <h3>{props.profile.fullName}</h3>
+                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                     {/*<h3><i>{props.profile.aboutMe}</i></h3>*/}
-                    <a href={props.profile.github}></a>
-                    <span>{props.profile.lookingForAJob ? <img src="http://www.animatedgif.net/sitemessages/search/w-search_ani_e0.gif"/> :''}</span>
-                    <p>{props.profile.lookingForAJobDescription}</p>
+                    {/*<a href={props.profile.github}></a>*/}
+                    {/*<span>{props.profile.lookingForAJob ? <img src="http://www.animatedgif.net/sitemessages/search/w-search_ani_e0.gif"/> :''}</span>*/}
+                    {/*<p>{props.profile.lookingForAJobDescription}</p>*/}
                 </div>
             </div>
         </div>
