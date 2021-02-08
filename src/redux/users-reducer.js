@@ -83,10 +83,10 @@ export const toggleFollowingProgress = (isFetching, userId) => {
 }
 
 //Thunks
-export const getUsers = (currentPage,pageSize) => { return dispatch => {
-        dispatch(setCurrentPage(currentPage))
+export const requestUsers = (page, pageSize) => { return dispatch => {
+        dispatch(setCurrentPage(page))
         dispatch(setIsFetching(true));
-        usersAPI.getUsers(currentPage,pageSize).then(data => {
+        usersAPI.getUsers(page,pageSize).then(data => {
             dispatch(setIsFetching(false))
             dispatch(setUsers(data.items))
             data.totalCount = 100;     // HOZIRCHA TURIBTI, KEYIN O'CHIRIB TASHLANSIN
