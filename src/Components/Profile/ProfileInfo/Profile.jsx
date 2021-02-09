@@ -2,6 +2,7 @@ import React from "react";
 import s from './profileInfo.module.css'
 import Preloader from "../../common/preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
+import ProfileStatusWithHook from "./ProfileStatusWithHook";
 
 const ProfileInfo = (props) => {
     if (!props.profile) {return <Preloader />}
@@ -16,7 +17,7 @@ const ProfileInfo = (props) => {
                 <div>
                     <img src={props.profile.photos.large} />
                     <h3>{props.profile.fullName}</h3>
-                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+                    <ProfileStatusWithHook status={props.status} updateStatus={props.updateStatus}/>
                     {/*<h3><i>{props.profile.aboutMe}</i></h3>*/}
                     {/*<a href={props.profile.github}></a>*/}
                     {/*<span>{props.profile.lookingForAJob ? <img src="http://www.animatedgif.net/sitemessages/search/w-search_ani_e0.gif"/> :''}</span>*/}

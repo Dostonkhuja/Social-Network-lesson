@@ -17,7 +17,6 @@ class UsersСontainer extends React.Component {
     }
 
     render() {
-        console.log('render')
         return <>
             {this.props.isFetching ? <Preloader/> : null}
             <Users
@@ -46,7 +45,6 @@ class UsersСontainer extends React.Component {
 // }
 
 let mapStateToProps = (state) => {
-    console.log('MSTP')
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),
