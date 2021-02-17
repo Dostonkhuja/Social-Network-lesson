@@ -1,5 +1,6 @@
 import React from 'react'
 import {usersAPI} from "../api/api";
+import {updateObjectArray} from "../utils/object helpers/object-helpers";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -23,22 +24,12 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u
-                })
+                 users: updateObjectArray(state.users,action.userId,"id",{followed: true})
             }
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u
-                })
+                users:updateObjectArray(state.users,action.userId,"id",{followed: false})
             }
         case SET_USERS:
             return {...state, users: action.users}
@@ -83,37 +74,33 @@ export const toggleFollowingProgress = (isFetching, userId) => {
 }
 
 //Thunks
-export const requestUsers = (page, pageSize) => { return dispatch => {
-        dispatch(setCurrentPage(page))
-        dispatch(setIsFetching(true));
-        usersAPI.getUsers(page,pageSize).then(data => {
-            dispatch(setIsFetching(false))
-            dispatch(setUsers(data.items))
-            data.totalCount = 100;     // HOZIRCHA TURIBTI, KEYIN O'CHIRIB TASHLANSIN
-            dispatch(setTotalUsersCount(data.totalCount))
-        })
-    }
+export const requestUsers = (page, pageSize) => async dispatch => {
+    dispatch(setCurrentPage(page))
+    dispatch(setIsFetching(true));
+    let response = await usersAPI.getUsers(page, pageSize)
+    dispatch(setIsFetching(false))
+    dispatch(setUsers(response.items))
+    response.totalCount = 100;     // HOZIRCHA TURIBTI, KEYIN O'CHIRIB TASHLANSIN
+    dispatch(setTotalUsersCount(response.totalCount))
 }
 
-export const follow = (userId) => {return dispatch =>{
-     dispatch(toggleFollowingProgress(true,userId))
-    usersAPI.followPost(userId).then(data => {
-        if (data.resultCode === 0) {
-            dispatch(followSuccess(userId))
-        }
-        dispatch(toggleFollowingProgress(false,userId))
-    })
-}}
+const followUnfollowFlow = async (dispatch, userId,apiMethod,actionCreator) => {
+    dispatch(toggleFollowingProgress(true, userId));
+    let response = await apiMethod(userId);
 
-export const unfollow = (userId) => {return dispatch =>{
-    dispatch(toggleFollowingProgress(true,userId))
-    usersAPI.unfollowDelete(userId).then(data => {
-        if (data.resultCode === 0) {
-            dispatch(unfollowSuccess(userId))
-        }
-        dispatch(toggleFollowingProgress(false,userId))
-    })
-}}
+    if (response.resultCode === 0) {
+        dispatch(actionCreator(userId));
+    }
+    dispatch(toggleFollowingProgress(false, userId));
+}
+
+export const follow = (userId) => async dispatch => {
+    followUnfollowFlow(dispatch,userId,usersAPI.followPost.bind(userId),followSuccess)
+}
+
+export const unfollow = (userId) => async dispatch => {
+    followUnfollowFlow(dispatch,userId,usersAPI.unfollowDelete.bind(userId),unfollowSuccess)
+}
 
 export default usersReducer;
 
