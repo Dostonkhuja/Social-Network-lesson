@@ -80,7 +80,7 @@ export const requestUsers = (page, pageSize) => async dispatch => {
     let response = await usersAPI.getUsers(page, pageSize)
     dispatch(setIsFetching(false))
     dispatch(setUsers(response.items))
-    response.totalCount = 100;     // HOZIRCHA TURIBTI, KEYIN O'CHIRIB TASHLANSIN
+    // response.totalCount = 100;     // HOZIRCHA TURIBTI, KEYIN O'CHIRIB TASHLANSIN
     dispatch(setTotalUsersCount(response.totalCount))
 }
 
