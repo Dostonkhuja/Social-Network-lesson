@@ -2,3 +2,26 @@
     width: 100px;
     height: 100px;
 }
+
+.pagination{
+    padding-top: 15px;
+    padding-left: 19vw;
+}
+
+.userBlock{
+    width: 100px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.preLoaderUsers{
+    position: absolute;
+    margin-top: 70px;
+    margin-left: 50%;
+}
+
+.userContainer{
+    position: relative;
+}

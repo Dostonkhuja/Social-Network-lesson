@@ -1,15 +1,15 @@
 import React from 'react'
-import s from './users.module.css'
-import Paginator from "../common/Paginator/Paginator";
+import { Pagination } from 'antd';
 import User from "./User";
+import style from './users.module.css'
 
 const Users = ({ currentPage, totalUsersCount, pageSize, onPageChanged,
                    users, followingInProgress, unfollow, follow, ...props
                }) => {
     return <div>
-
-        <Paginator currentPage={currentPage} onPageChanged={onPageChanged}
-                   totalItemsCount={totalUsersCount} pageSize={pageSize}/>
+        <div className={style.pagination}>
+            <Pagination showQuickJumper defaultCurrent={currentPage} total={totalUsersCount} onChange={onPageChanged} />
+        </div>
 
         <div>
             {users.map(u => <User user={u} key={u.id}
