@@ -2,11 +2,15 @@ import {getAuthUserData} from "./auth-reducer";
 
 const INITIALIZED_SUCCSESS = 'INITIALIZED_SUCCSESS'
 
-let initialState = {
+export type InitialStateType = {
+    initialized:boolean
+}
+
+let initialState:InitialStateType = {
     initialized: false
 }
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state:InitialStateType = initialState, action:any):InitialStateType => {
     switch (action.type) {
         case INITIALIZED_SUCCSESS:
             return {
@@ -18,9 +22,13 @@ const appReducer = (state = initialState, action) => {
     }
 }
 
-export const initializedSuccsess = () => ({type: INITIALIZED_SUCCSESS})
+type InitializedSuccsessType = {
+    type:typeof INITIALIZED_SUCCSESS
+}
 
-export const initializeApp = () => (dispatch) => {
+export const initializedSuccsess = ():InitializedSuccsessType => ({type: INITIALIZED_SUCCSESS})
+
+export const initializeApp = () => (dispatch:any) => {
     let promise = dispatch(getAuthUserData())
     Promise.all([promise])
         .then(() => {
