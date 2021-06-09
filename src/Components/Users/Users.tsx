@@ -2,8 +2,20 @@ import React from 'react'
 import { Pagination } from 'antd';
 import User from "./User";
 import style from './users.module.css'
+import {UserType} from "../../types/types";
 
-const Users = ({ currentPage, totalUsersCount, pageSize, onPageChanged,
+type PropsType = {
+    currentPage:number,
+    totalUsersCount:number,
+    pageSize:number,
+    onPageChanged:(pageNumber:number)=> void,
+    users:Array<UserType>,
+    followingInProgress:Array<number>,
+    unfollow:(userId:number)=>void,
+    follow:(userid:number)=>void
+}
+
+const Users:React.FC<PropsType> = ({ currentPage, totalUsersCount, pageSize, onPageChanged,
                    users, followingInProgress, unfollow, follow, ...props
                }) => {
     return <div>

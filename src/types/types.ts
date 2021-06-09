@@ -31,4 +31,5 @@ export type UserType = {
     name:string
     status:String
     photos:PhotosType
+    followed:boolean
 }

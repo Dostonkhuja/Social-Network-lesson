@@ -3,8 +3,16 @@ import s from './users.module.css'
 import userPhoto from '../../assets/images/New_user.png'
 import {NavLink} from "react-router-dom";
 import {Button} from "antd";
+import {UserType} from "../../types/types";
 
-const User = ({user, followingInProgress, unfollow, follow}) => {
+type PropsType = {
+    user:UserType
+    followingInProgress:Array<number>
+    unfollow:(userId:number)=>void
+    follow:(userId:number)=>void
+}
+
+const User:React.FC<PropsType> = ({user, followingInProgress, unfollow, follow}) => {
     return ( <div className={s.userBlock}>
                     <span>
                         <div>

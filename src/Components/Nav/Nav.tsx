@@ -13,11 +13,19 @@ import {
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
-class Nav extends React.Component {
+
+type PropsType = {
+
+}
+type StateType = {
+    collapsed:boolean
+}
+
+class Nav extends React.Component<PropsType,StateType> {
     state = {
         collapsed: false,
     };
-    onCollapse = collapsed => {
+    onCollapse = (collapsed:boolean) => {
         this.setState({ collapsed });
     };
     render() {

@@ -1,4 +1,5 @@
-const SEND_MESSAGE = 'SEND_MESSAGE';
+import {BaseThunkType, InferActionsTypes} from "./redux-store";
+import {FormAction} from "redux-form";
 
 type DialogType = {
     id:number
@@ -24,17 +25,17 @@ let initialState = {
         {id: 4, message: 'Yo'},
         {id: 5, message: 'Yo'}
     ] as Array <MessageType>,
+
+    newMessageBody:''
 }
 
-export type InitialStateType = typeof initialState
 
-const dialogsReducer = (state = initialState, action:any) => {
+const dialogsReducer = (state = initialState, action:ActionType):InitialStateType => {
     switch (action.type) {
-        case SEND_MESSAGE:
+        case 'SN/DIALOGS/SEND_MESSAGE':
             let body=action.newMessage
             return {
                 ...state,
-
                 newMessageBody: '',
                 messages: [...state.messages, {id: 6, message: body}],
             }
@@ -43,13 +44,14 @@ const dialogsReducer = (state = initialState, action:any) => {
     }
 }
 
-type SendMessageCreatorACType ={
-    type:typeof SEND_MESSAGE,
-    newMessage:string
-}
-
-export let sendMessageCreator = (newMessage :string):SendMessageCreatorACType => {
-    return {type: SEND_MESSAGE,newMessage}
+export let actions = {
+    sendMessageCreator : (newMessage :string) => {
+        return {type: 'SN/DIALOGS/SEND_MESSAGE',newMessage}
+    }
 }
 
 export default dialogsReducer;
+
+export type InitialStateType = typeof initialState
+type ActionType =InferActionsTypes< typeof actions>
+type ThunkType = BaseThunkType<ActionType | FormAction>

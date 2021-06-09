@@ -1,3 +1,5 @@
+import {BaseThunkType, InferActionsTypes} from "./redux-store";
+import {FormAction} from "redux-form";
 
 type myFriendType = {
     id:number
@@ -25,10 +27,16 @@ let initialState =  {
     ] as Array<myFriendType>
 }
 
-type InitialStateType = typeof initialState
-
-const navReducer = (state = initialState,action :any):InitialStateType=>{
+const navReducer = (state = initialState,action :ActionsTypes):InitialStateType=>{
     return state
 }
 
+let actions = {}
+
+
 export default navReducer;
+
+type InitialStateType = typeof initialState
+type ActionsTypes= InferActionsTypes<typeof actions>
+type ThunkType = BaseThunkType<ActionsTypes | FormAction>
+
