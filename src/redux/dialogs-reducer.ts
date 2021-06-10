@@ -45,7 +45,7 @@ const dialogsReducer = (state = initialState, action:ActionType):InitialStateTyp
 }
 
 export let actions = {
-    sendMessageCreator : (newMessage :string) => {
+    sendMessage : (newMessage :string) => {
         return {type: 'SN/DIALOGS/SEND_MESSAGE',newMessage}
     }
 }

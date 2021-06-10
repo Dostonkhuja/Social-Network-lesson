@@ -1,8 +1,13 @@
 import React from 'react';
 import s from "./myFriends.module.css";
 import Friend from "./Friend/Friend";
+import {MyFriendType} from "../../../redux/nav-reducer";
 
-const MyFriends = (props) => {
+type PropsType ={
+    myFriends:Array<MyFriendType>
+}
+
+const MyFriends:React.FC<PropsType> = (props) => {
     let friendElements = props.myFriends.map( f => <Friend name={f.name} img={f.img} key={f.id}/>)
     return (
         <div>

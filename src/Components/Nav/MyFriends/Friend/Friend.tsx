@@ -1,7 +1,12 @@
 import React from "react";
 import s from '../myFriends.module.css'
 
-const Friend = (props) => {
+type PropsType= {
+    img:string
+    name:string
+}
+
+const Friend:React.FC<PropsType> = (props) => {
     return (
         <div className={s.friendWrapper}>
             <div className={s.friendImg}>

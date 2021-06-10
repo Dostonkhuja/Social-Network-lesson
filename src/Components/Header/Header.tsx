@@ -4,13 +4,15 @@ import {NavLink} from "react-router-dom";
 import {UserOutlined} from "@ant-design/icons";
 import {Button} from "antd";
 
-type PropsType = {
+export type PropsType = {
     isAuth:boolean
     login:string | null
+}
+export type MapDispatchPropsType= {
     logout:()=> void
 }
 
-const Header:React.FC<PropsType> = (props) => {
+const Header:React.FC<PropsType&MapDispatchPropsType> = (props) => {
     return (
         <header className={s.header}>
                 <div className={s.loginBlock}>
