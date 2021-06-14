@@ -3,7 +3,7 @@ import './App.css';
 import Nav from "./Components/Nav/Nav";
 
 import {BrowserRouter, HashRouter, Route, withRouter} from "react-router-dom";
-import UsersConteiner from "./Components/Users/UsersConteiner";
+import  {UsersPage} from "./Components/Users/UsersConteiner";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import {compose} from "redux";
 import {connect, Provider} from "react-redux";
@@ -20,9 +20,12 @@ const { SubMenu } = Menu;
 const ProfileContainer = React.lazy(() => import("./Components/Profile/ProfileContainer"));
 const DialogsContainer = React.lazy(() => import("./Components/Dialogs/DialogsContainer"));
 const Login = React.lazy(() => import("./Components/Login/Login"));
+const ChatPage = React.lazy(() => import("./Components/pages/chat/ChatPage"))
 
 const SuspendedDialgos = withSuspense(DialogsContainer)
 const SuspendedProfile = withSuspense(ProfileContainer)
+const SuspendedChatPage = withSuspense(ChatPage)
+const SuspendedLogin = withSuspense(Login)
 
 type StateType ={
     collapsed:boolean
@@ -65,9 +68,11 @@ class App extends React.Component<PropsType,StateType> {
                         <Route path='/profile/:userId?'
                                      render={()=> <SuspendedProfile/> } />
                                 <Route path='/users'
-                                     render={() => <UsersConteiner/>}/>
+                                     render={() => <UsersPage />}/>
                                 <Route path='/login'
-                                       render={ withSuspense(Login)}/>
+                                       render={()=> <SuspendedLogin /> }/>
+                                <Route path='/chat'
+                                       render={()=> <SuspendedChatPage/> }/>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>SamuraiJs-social-network 2021. Developer: Sheraliyev D.</Footer>
                 </Layout>

@@ -1,50 +1,109 @@
-import React from 'react'
-import {Pagination} from 'antd';
+import React, {useEffect} from 'react'
 import User from "./User";
+import {Pagination} from 'antd';
 import style from './users.module.css'
-import {UserType} from "../../types/types";
 import {UsersSearchForm} from "./UserSearchForm";
-import {FilterType} from "../../redux/users-reducer";
+import {FilterType, follow, requestUsers, unfollow} from "../../redux/users-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers,
+    getUsersFilter
+} from "../../redux/users-selectors";
+import {useHistory} from 'react-router-dom';
+import * as queryString from "querystring";
+
+type PropsType = {}
+
+type QueryParamsType = { term?: string; page?: string; friend?: string }
+
+export const Users: React.FC<PropsType> = (props) => {
+
+    const followingInProgress = useSelector(getFollowingInProgress)
+    const totalUsersCount = useSelector(getTotalUsersCount)
+    const currentPage = useSelector(getCurrentPage)
+    const pageSize = useSelector(getPageSize)
+    const filter = useSelector(getUsersFilter)
+    const users = useSelector(getUsers)
+
+    const dispatch = useDispatch()
+    const history = useHistory()
 
 
-type PropsType = {
-    currentPage:number,
-    totalUsersCount:number,
-    pageSize:number,
-    onPageChanged:(pageNumber:number)=> void,
-    onFilterChagned:(filter:FilterType)=> void,
-    users:Array<UserType>,
-    followingInProgress:Array<number>,
-    unfollow:(userId:number)=>void,
-    follow:(userid:number)=>void
-}
+    useEffect(() => {
+        const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
 
-const Users:React.FC<PropsType> = ({ currentPage, totalUsersCount, pageSize, onPageChanged,
-                   users, followingInProgress, unfollow, follow, ...props
-               }) => {
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (!!parsed.page) actualPage = Number(parsed.page)
+
+        if (!!parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
+
+        switch(parsed.friend) {
+            case "null":
+                actualFilter = {...actualFilter, friend: null}
+                break;
+            case "true":
+                actualFilter = {...actualFilter, friend: true}
+                break;
+            case "false":
+                actualFilter = {...actualFilter, friend: false}
+                break;
+        }
+
+        dispatch(requestUsers(actualPage, pageSize, actualFilter))
+    }, [])
+
+
+    useEffect(() => {
+        const query: QueryParamsType = {}
+
+        if (!!filter.term) query.term = filter.term
+        if (filter.friend !== null) query.friend = String(filter.friend)
+        if (currentPage !== 1) query.page = String(currentPage)
+
+        history.push({
+            pathname: '/users',
+            search: queryString.stringify(query)
+        })
+    }, [filter, currentPage])
+
+    const onPageChanged = (pageNumber: number) => {
+        dispatch(requestUsers(pageNumber, pageSize, filter))
+    }
+    const onFilterChagned = (filter: FilterType) => {
+        dispatch(requestUsers(1, pageSize, filter))
+    }
+
+    const changeFollow = (userId: number) => {
+        dispatch(follow(userId))
+    }
+
+    const CHangeUnfollow = (userId: number) => {
+        dispatch(unfollow(userId))
+    }
+
     return <div>
 
-        <UsersSearchForm onFilterChagned={props.onFilterChagned} />
+        <UsersSearchForm onFilterChagned={onFilterChagned}/>
 
         <div className={style.pagination}>
-            <Pagination showQuickJumper defaultCurrent={currentPage} total={totalUsersCount} onChange={onPageChanged} />
+            <Pagination showQuickJumper defaultCurrent={currentPage} total={totalUsersCount} onChange={onPageChanged}/>
         </div>
 
         <div>
             {users.map(u => <User user={u} key={u.id}
                                   followingInProgress={followingInProgress}
-                                  unfollow={unfollow}
-                                  follow={follow}
+                                  unfollow={CHangeUnfollow}
+                                  follow={changeFollow}
             />)}
         </div>
-
     </div>
 }
-
-
-
-export default Users;
-
 
 
 

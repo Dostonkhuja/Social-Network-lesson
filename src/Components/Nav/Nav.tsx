@@ -44,6 +44,9 @@ class Nav extends React.Component<PropsType,StateType> {
                     <Menu.Item key="3" icon={<UserSwitchOutlined />}>
                         <NavLink to='/users' activeClassName={s.activeLink}> Developers </NavLink>
                     </Menu.Item>
+                    <Menu.Item key="7" icon={<UserSwitchOutlined />}>
+                        <NavLink to='/chat' activeClassName={s.activeLink}>Chat</NavLink>
+                    </Menu.Item>
                     <Menu.Item key="4" icon={<DesktopOutlined />}>
                         <NavLink to='/news' activeClassName={s.activeLink}> News </NavLink>
                     </Menu.Item>
